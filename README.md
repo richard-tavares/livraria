@@ -2,6 +2,8 @@
 
 Sistema completo de gerenciamento de livros com painel interativo, filtros dinâmicos e gráficos visuais.
 
+![screencapture](https://github.com/user-attachments/assets/bb8d52bc-4971-41eb-a7ed-f1ac0e76c783)
+
 ---
 
 ## 🚀 Tecnologias
