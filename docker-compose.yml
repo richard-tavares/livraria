@@ -19,7 +19,7 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: livraria
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     ports:
       - "3306:3306"
     volumes:
