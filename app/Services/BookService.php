@@ -3,46 +3,46 @@
 namespace App\Services;
 
 use App\Models\Book;
+use App\Repositories\BookRepositoryInterface;
 use App\Exceptions\NotFoundException;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 class BookService
 {
+    public function __construct(
+        protected BookRepositoryInterface $repository
+    ) {}
+
     public function list(): Collection
     {
-        return Book::with(['authors', 'subjects'])->get();
+        return $this->repository->all();
     }
 
     public function create(array $data): Book
     {
-        $book = Book::create($data);
-
-        $book->authors()->sync($data['authors']);
-        $book->subjects()->sync($data['subjects']);
-
-        return $book->load(['authors', 'subjects']);
+        return $this->repository->create($data);
     }
 
     public function getById(int $id): Book
     {
-        return Book::with(['authors', 'subjects'])->find($id) ?? throw new NotFoundException('Livro');
+        return $this->repository->findWithRelations($id) ?? throw new NotFoundException('Livro');
     }
 
     public function update(int $id, array $data): Book
     {
-        $book = Book::find($id) ?? throw new NotFoundException('Livro');
+        if (!$this->repository->update($id, $data)) {
+            throw new NotFoundException('Livro');
+        }
 
-        $book->update($data);
-        $book->authors()->sync($data['authors']);
-        $book->subjects()->sync($data['subjects']);
-
-        return $book->load(['authors', 'subjects']);
+        return $this->getById($id);
     }
 
     public function delete(int $id): bool
     {
-        $book = Book::find($id) ?? throw new NotFoundException('Livro');
+        if (!$this->repository->delete($id)) {
+            throw new NotFoundException('Livro');
+        }
 
-        return $book->delete();
+        return true;
     }
 }

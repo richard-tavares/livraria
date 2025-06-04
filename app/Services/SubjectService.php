@@ -3,39 +3,46 @@
 namespace App\Services;
 
 use App\Models\Subject;
+use App\Repositories\SubjectRepositoryInterface;
 use App\Exceptions\NotFoundException;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 class SubjectService
 {
+    public function __construct(
+        protected SubjectRepositoryInterface $repository
+    ) {}
+
     public function list(): Collection
     {
-        return Subject::all();
+        return $this->repository->all();
     }
 
     public function create(array $data): Subject
     {
-        return Subject::create($data);
+        return $this->repository->create($data);
     }
 
     public function getById(int $id): Subject
     {
-        return Subject::find($id) ?? throw new NotFoundException('Assunto');
+        return $this->repository->find($id) ?? throw new NotFoundException('Assunto');
     }
 
     public function update(int $id, array $data): Subject
     {
-        $subject = Subject::find($id) ?? throw new NotFoundException('Assunto');
+        if (!$this->repository->update($id, $data)) {
+            throw new NotFoundException('Assunto');
+        }
 
-        $subject->update($data);
-
-        return $subject;
+        return $this->getById($id);
     }
 
     public function delete(int $id): bool
     {
-        $subject = Subject::find($id) ?? throw new NotFoundException('Assunto');
+        if (!$this->repository->delete($id)) {
+            throw new NotFoundException('Assunto');
+        }
 
-        return $subject->delete();
+        return true;
     }
 }

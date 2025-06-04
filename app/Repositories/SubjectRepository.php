@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Subject;
 use Illuminate\Database\Eloquent\Collection;
 
-class SubjectRepository
+class SubjectRepository implements SubjectRepositoryInterface
 {
     public function all(): Collection
     {

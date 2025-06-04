@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Author;
 use Illuminate\Database\Eloquent\Collection;
 
-class AuthorRepository
+class AuthorRepository implements AuthorRepositoryInterface
 {
     public function all(): Collection
     {
