@@ -77,8 +77,11 @@ Você pode importar o arquivo abaixo no [Postman](https://www.postman.com):
 
 ```
 ├── app/
+│   ├── Exceptions/
 │   ├── Http/Controllers/
 │   ├── Models/
+│   ├── Providers/
+│   ├── Repositories/
 │   └── Services/
 ├── database/
 │   ├── migrations/
@@ -87,8 +90,11 @@ Você pode importar o arquivo abaixo no [Postman](https://www.postman.com):
 ├── resources/
 │   └── views/
 ├── routes/
-│   └── web.php
+│   ├── web.php
 │   └── api.php
+├── tests/
+│   ├── Feature/
+│   └── Unit/
 ├── livraria.postman_collection.json
 └── README.md
 ```
